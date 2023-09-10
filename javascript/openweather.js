@@ -1,5 +1,5 @@
 // Defina a URL da API e a chave da API
-const apiKey = "";
+const apiKey = API_KEY;
 const apiUrl = 'https://api.weatherapi.com/v1/current.json';
 
 // Função para buscar o clima com base em uma cidade
