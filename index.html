@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/9b5dcfea76.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <i id="lupa" class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" name="cityInput" id="cityInput" placeholder="Nome da cidade">
+    </header>
+    <main>
+        <div class="weather-container">
+            
+            <div id="sunny-img"></div>
+            <div id="rainy-img"></div>
+            <div id="cloudy-img"></div>
+            <div id="snowy-img"></div>
+            <div id="default-img"></div>
+
+            <h2 id="temperature">20ºc</h2>
+            <div class="icon-container">
+                <img id="icon-img" src="https://cdn.weatherapi.com/weather/64x64/day/116.png" alt="icon">
+            </div>
+            <h3 id="condition">Condição</h3>
+            
+            <div class="weather-info">
+                <h2 id="city-name">Cidade</h2>
+                <h3 id="country-name">País</h3>
+
+                <div class="info">
+                    <div class="first-row">
+                        <div class="wind-container">
+                            <i class="fa-solid fa-wind"></i>
+                            <p id="wind">wind</p>
+                        </div>
+                        <div class="humidity-container">
+                            <i class="fa-solid fa-droplet"></i>
+                            <p id="humidity">humidity</p>
+                        </div>
+                    </div>
+                    <div class="second-row">
+                        <i class="fa-solid fa-calendar-week"></i>
+                        <p id="datetime">date</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </main>
+
+    <script src="javascript/openweather.js"></script>
+    
+</body>
+</html>
