@@ -10,7 +10,7 @@ const datetime = document.querySelector('.datetime')
 
 async function getWeather(cityName) {
   try {
-    const response = await fetch(`http://localhost:3000/clima?cidade=${encodeURIComponent(cityName)}`);
+    const response = await fetch(`https://weather-api-server-production.up.railway.app/clima?cidade=${encodeURIComponent(cityName)}`);
     if (!response.ok) {
       throw new Error(`Erro na API: ${response.status}`);
     }
