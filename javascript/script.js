@@ -60,7 +60,7 @@ function getWeatherGroup(conditionText){
 }
 
 function changeWeatherImage(weatherGroup){
-  weatherImg.setAttribute('src', `./weather-app/Assets/${weatherGroup}.gif`)
+  weatherImg.setAttribute('src', `weather-app/Assets/${weatherGroup}.gif`);
 }
 
 input.addEventListener('keydown', (event) => {
