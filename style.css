@@ -46,53 +46,26 @@ main{
     }
 }
 
-.weather-container #sunny-img,
-.weather-container #rainy-img,
-.weather-container #cloudy-img,
-.weather-container #snowy-img,
-.weather-container #default-img{
+.weather-img{
     position: absolute;
     background-size: contain;
     width: 300px;
     height: 300px;
     top: 0;
-    opacity: 0;
+    opacity: 1;
     /* transform: translateX(-200px); */
     transition: all .6s ease;
-}
-#sunny-img{
-    background-image: url(Assets/sunny.gif);
-}
-#rainy-img{
-    background-image: url(Assets/rainy.gif);
-}
-#cloudy-img{
-    background-image: url(Assets/cloudy.gif);
-}
-#snowy-img{
-    background-image: url(Assets/snowy.gif);
-}
-#default-img{
-    background-image: url(Assets/cloudy.gif);
+    /* background-image: url(Assets/cloudy.gif); */
 }
 
-
-#sunny-img.showing,
-#rainy-img.showing,
-#cloudy-img.showing,
-#snowy-img.showing,
-#default-img.showing{
-    opacity: 1;
-}
-
-#temperature{
+.temperature{
     z-index: 1000;
     color: #efefef;
     font-size: 100px;
     text-shadow: #05050555 0 6px 8px;
     transform: translate3d(40px,120px,0);
 }
-#condition{
+.condition{
     z-index: 1000;
     color: #efefef;
     background: #5555ffcc;
@@ -103,7 +76,7 @@ main{
     padding-left: 50px;
     transform: translate3d(0px,90px,0);
 }
-.icon-container{
+.weather-icon-container{
     z-index: 1000;
     position: absolute;
     padding: 5px 15px 0 0;
@@ -115,7 +88,7 @@ main{
     border-radius: 0 50px 50px 0px;
 
 }
-#icon-img{
+.weather-icon-img{
     width: 64px;
     height: 64px;
 }
@@ -127,7 +100,7 @@ main{
     height: 200px;
     background: #efefef;
 }
-.weather-info #city-name{
+.weather-info .city{
     color: #151515;
     background: #e4e4e4;
     max-width: 270px;
@@ -142,7 +115,7 @@ main{
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.weather-info #country-name{
+.weather-info .country{
     color: #252525;
     text-align: center;
     text-wrap: nowrap;
@@ -150,7 +123,7 @@ main{
     text-overflow: ellipsis;
     transform: translateY(-7px);
 }
-.weather-info #condition{
+.weather-info .condition{
     color: #252525;
     margin-left: 10px;
     font-size: 18px;
@@ -206,7 +179,7 @@ header{
     height: 80px;
     /* height: 60px; */
 }
-#cityInput{
+#city-input{
     background: #efefef;
     font-family: 'Nunito', sans-serif;
     font-size: 20px;
@@ -221,10 +194,10 @@ header{
     text-align: center;
     transition: all .3s ease;
 }
-#cityInput:hover{
+#city-input:hover{
     border: 4px solid #a3b1ff;
 }
-#cityInput:focus{
+#city-input:focus{
     outline: none;
     border: 4px solid #4662ff;
     transition: all .3s ease;

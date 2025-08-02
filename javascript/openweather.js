@@ -1,115 +1,44 @@
-// Defina a URL da API e a chave da API
-const apiKey = "bf80c00aa92d4151904160519231009";
-const apiUrl = 'https://api.weatherapi.com/v1/current.json';
+const input = document.querySelector('#city-input')
+const temperature = document.querySelector('.temperature')
+const city = document.querySelector('.city')
+const country = document.querySelector('.country')
+const condition = document.querySelector('.condition')
+const icon = document.querySelector('.weather-icon-img')
+const wind = document.querySelector('.wind')
+const humidity = document.querySelector('.humidity')
+const datetime = document.querySelector('.datetime')
 
-// Função para buscar o clima com base em uma cidade
-function getWeather(city) {
-    // Construa a URL da requisição com os parâmetros necessários
-    const url = `${apiUrl}?key=${apiKey}&q=${city}&lang=pt`;
+async function getWeather(cityName) {
+  try {
+    const response = await fetch(`http://localhost:3000/clima?cidade=${encodeURIComponent(cityName)}`);
+    if (!response.ok) {
+      throw new Error(`Erro na API: ${response.status}`);
+    }
+    const data = await response.json();
 
-    // Faça a requisição GET usando fetch
-    fetch(url)
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro na requisição à API Weather');
-        }
-        return response.json();
-        })
-        .then(data => {
-            console.log('Dados meteorológicos:', data);
-        
-            const temperature = document.getElementById('temperature');
-            temperature.innerText = `${Math.round(Number(data.current.temp_c))}°`;
-            const cityName = document.getElementById('city-name');
-            cityName.innerText = data.location.name;
-            const countryName = document.getElementById('country-name');
-            countryName.innerHTML = `${data.location.country}`;
-            
-            const condition = data.current.condition.text;
-            const conditionText = document.getElementById("condition");
-            conditionText.innerText=condition
-
-            const icon = document.getElementById('icon-img');
-            icon.setAttribute('src', data.current.condition.icon)
-
-            const wind = document.getElementById('wind')
-            wind.innerText = `${data.current.wind_kph} km/h`
-
-            const humidity = document.getElementById('humidity');
-            humidity.innerText = `${data.current.humidity}`
-
-            const datetime = document.getElementById('datetime');
-            datetime.innerText = data.location.localtime
-
-            const sunny = document.getElementById('sunny-img');
-            const rainy = document.getElementById('rainy-img');
-            const cloudy = document.getElementById('cloudy-img');
-            const snowy = document.getElementById('snowy-img');
-            const defaultCondition = document.getElementById('default-img')
-
-            const palavrasChaveChuva = ['chuva', 'aguaceiro', 'chuvisco'];
-            const palavrasChaveSol = ['sol', 'céu limpo'];
-            const palavrasChaveNeve = ['neve', 'nevasca'];
-            const palavrasChaveNublado = ['nublado', 'encoberto', 'neblina'];
-            
-            if(palavrasChaveChuva.some(palavra => condition.includes(palavra))){
-                sunny.classList.remove('showing');
-                rainy.classList.add('showing');
-                cloudy.classList.remove('showing');
-                snowy.classList.remove('showing');
-                defaultCondition.classList.remove('showing');
-            }
-            else if(palavrasChaveSol.some(palavra => condition.includes(palavra))){
-                sunny.classList.add('showing');
-                rainy.classList.remove('showing');
-                cloudy.classList.remove('showing');
-                snowy.classList.remove('showing');
-                defaultCondition.classList.remove('showing');
-            }
-            else if(palavrasChaveNeve.some(palavra => condition.includes(palavra))){
-                sunny.classList.remove('showing');
-                rainy.classList.remove('showing');
-                cloudy.classList.remove('showing');
-                snowy.classList.add('showing');
-                defaultCondition.classList.remove('showing');
-            }
-            else if(palavrasChaveNublado.some(palavra => condition.includes(palavra))){
-                sunny.classList.remove('showing');
-                rainy.classList.remove('showing');
-                cloudy.classList.add('showing');
-                snowy.classList.remove('showing');
-                defaultCondition.classList.remove('showing');
-            }
-            else{
-                sunny.classList.remove('showing');
-                rainy.classList.remove('showing');
-                cloudy.classList.remove('showing');
-                snowy.classList.remove('showing');
-                defaultCondition.classList.add('showing');
-            }
-        
-
-
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-        });
+    temperature.textContent = `${Math.round(data.current.temp_c)}°`;
+    city.textContent = data.location.name;
+    country.textContent = data.location.country;
+    condition.textContent = data.current.condition.text;
+    icon.src = data.current.condition.icon;
+    wind.textContent = `${data.current.wind_kph} km/h`;
+    humidity.textContent = `${data.current.humidity}%`;
+    datetime.textContent = data.location.localtime;
+  } catch (error) {
+    console.error('Erro ao buscar o clima:', error);
+    alert('Não foi possível obter o clima. Tente novamente.');
+  }
 }
 
-// Chame a função getWeather com a cidade desejada
-let cidade = 'Tokyo'; // Substitua pela cidade desejada
-getWeather(cidade);
-
-const input = document.getElementById("cityInput")
-input.addEventListener('keydown', function(event){
-    if(event.key === 'Enter'){
-        try{
-            cidade = input.value;
-            getWeather(cidade);
-            input.value=''
-        }
-        catch (e){
-            console.error('Ocorreu um erro: ', e.message)
-        }
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    const cityName = input.value.trim();
+    if (cityName) {
+      getWeather(cityName);
+      input.value = '';
     }
-})
+  }
+});
+
+// Opcional: busca inicial
+getWeather('Recife');
