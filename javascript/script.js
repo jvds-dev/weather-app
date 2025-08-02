@@ -59,10 +59,10 @@ function getWeatherGroup(conditionText){
   
 }
 
-function changeWeatherImage(weatherGroup){
-  const basePath = window.location.pathname.includes('weather-app') ? '/weather-app/' : './';
-  weatherImg.setAttribute('src', `${basePath}Assets/${weatherGroup}.gif`);
+function changeWeatherImage(weatherGroup) {
+  weatherImg.setAttribute('src', `./Assets/${weatherGroup}.gif`);
 }
+
 
 
 input.addEventListener('keydown', (event) => {
