@@ -45,7 +45,7 @@ function getWeatherGroup(conditionText){
     rainy: ['chuva', 'aguaceiro', 'chuvisco'],
     sunny: ['sol', 'céu limpo'],
     snowy: ['neve', 'nevasca'],
-    cloudy: ['nublado', 'encoberto', 'neblina']
+    cloudy: ['nublado', 'encoberto', 'neblina', 'nevoeiro']
   };
 
   const texto = conditionText.toLowerCase();
