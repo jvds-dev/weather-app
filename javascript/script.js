@@ -55,7 +55,7 @@ function getWeatherGroup(conditionText){
       return key;
     }
   }
-  return 'default';
+  return 'snowy';
   
 }
 
