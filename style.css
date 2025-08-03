@@ -12,6 +12,9 @@ header {
     padding: 20px;
     gap: 10px;
 }
+html{
+    background-color: #1d1d1d;
+}
 
 #city-input {
     padding: 10px;
@@ -64,6 +67,11 @@ header {
     max-width: 230px;
     border-radius: 0 22px 24px 24px;
     overflow: hidden;
+    cursor: pointer;
+    transition: all ease .3s;
+}
+.weather-container:hover{
+    transform: scale(1.1)
 }
 
 .top-weather-container{
@@ -101,7 +109,7 @@ header {
     filter: drop-shadow(2px 2px 8px #33333377);
 }
 .weather-icon-container{
-    background: #000;
+    background: #fff;
     width: 72px;
     height: 64px;
     border-radius: 0 0px 32px 0;
@@ -113,6 +121,7 @@ header {
 .weather-icon-img{
     transform: translateY(4px);
     width: 52px;
+    filter: drop-shadow(2px 2px 2px #55555555);
 }
 
 
