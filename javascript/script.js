@@ -25,8 +25,10 @@ async function getWeather(cityName) {
 }
 
 function createWeatherCard(data) {
+	saveCity(data.location.name)
 	const container = document.createElement('div');
 	container.classList.add('weather-container');
+	container.dataset.name = data.location.name
 	const weatherCondition = getWeatherGroup(data.current.condition.text)
 	container.innerHTML = `
       <div class="top-weather-container">
@@ -91,6 +93,14 @@ function searchCity() {
 	}
 }
 
+function saveCity(city){
+	let cities = JSON.parse(localStorage.getItem('cities')) || []
+	if(!cities.includes(city)){
+		cities.push(city)
+		localStorage.setItem('cities', JSON.stringify(cities))
+	}
+}
+
 function changeWeatherImage(weatherGroup) {
 	weatherImg.setAttribute('src', `./Assets/${weatherGroup}.gif`);
 }
@@ -121,9 +131,24 @@ cards.addEventListener('click', (e) => {
 });
 
 btnRemoveSelected.onclick = () => {
-	document.querySelectorAll('.selected').forEach(element => {
-		element.remove()
-		toolbar.classList.remove('visible')
-	})
-}
+	const selected = document.querySelectorAll('.selected');
+	const cities = JSON.parse(localStorage.getItem('cities')) || [];
 
+	const updatedCities = cities.filter(city => {
+		return ![...selected].some(el => el.dataset.name === city);
+	});
+
+	localStorage.setItem('cities', JSON.stringify(updatedCities));
+
+	selected.forEach(element => element.remove());
+
+	toolbar.classList.remove('visible');
+};
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    const savedCities = JSON.parse(localStorage.getItem('cities')) || [];
+    savedCities.forEach(city => {
+        getWeather(city)
+    });
+});
