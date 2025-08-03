@@ -1,78 +1,99 @@
 const input = document.querySelector('#city-input')
-const temperature = document.querySelector('.temperature')
-const city = document.querySelector('.city')
-const country = document.querySelector('.country')
-const condition = document.querySelector('.condition')
-const icon = document.querySelector('.weather-icon-img')
-const wind = document.querySelector('.wind')
-const humidity = document.querySelector('.humidity')
-const datetime = document.querySelector('.datetime')
-
 const weatherImg = document.querySelector('.weather-img')
-
-// const conditionValue = ''
+const cards = document.querySelector('.cards')
+const btnAddCard = document.querySelector("#button-add-card")
 
 async function getWeather(cityName) {
-  try {
-    const response = await fetch(`https://weather-api-server-production.up.railway.app/clima?cidade=${encodeURIComponent(cityName)}`);
-    if (!response.ok) {
-      throw new Error(`Erro na API: ${response.status}`);
-    }
-    const data = await response.json();
+	try {
+		const response = await fetch(`https://weather-api-server-production.up.railway.app/clima?cidade=${encodeURIComponent(cityName)}`);
+		if (!response.ok) {
+			throw new Error(`Erro na API: ${response.status}`);
+		}
+		const data = await response.json();
 
-    temperature.textContent = `${Math.round(data.current.temp_c)}°`;
-    city.textContent = data.location.name;
-    country.textContent = data.location.country;
-    condition.textContent = data.current.condition.text;
-    icon.src = data.current.condition.icon;
-    wind.textContent = `${data.current.wind_kph} km/h`;
-    humidity.textContent = `${data.current.humidity}%`;
-    datetime.textContent = data.location.localtime;
+		createWeatherCard(data);
 
-    const weatherGroup = getWeatherGroup(data.current.condition.text)
-    changeWeatherImage(weatherGroup)
-
-    console.log(weatherGroup)
-  } catch (error) {
-    console.error('Erro ao buscar o clima:', error);
-    alert('Não foi possível obter o clima. Tente novamente.');
-  }
-  
+	} catch (error) {
+		console.error('Erro ao buscar o clima:', error);
+		alert('Não foi possível obter o clima. Tente novamente.');
+	}
 }
 
-function getWeatherGroup(conditionText){
-  const weatherConditions = {
-    rainy: ['chuva', 'aguaceiro', 'chuvisco'],
-    sunny: ['sol', 'céu limpo'],
-    snowy: ['neve', 'nevasca'],
-    cloudy: ['nublado', 'encoberto', 'neblina', 'nevoeiro']
-  };
+function createWeatherCard(data) {
+	const container = document.createElement('div');
+	container.classList.add('weather-container');
+	const weatherCondition = getWeatherGroup(data.current.condition.text)
+	console.log(weatherCondition)
+	container.innerHTML = `
+      <div class="top-weather-container">
+          <h2 class="temperature">${Math.round(data.current.temp_c)}°</h2>
+          <div class="weather-icon-container">
+              <img class="weather-icon-img" src="${data.current.condition.icon}" alt="icon">
+          </div>
+          <h3 class="condition">${data.current.condition.text}</h3>
+      </div>
+      <div class="bottom-weather-container">
+          <h2 class="city">${data.location.name}</h2>
+          <h3 class="country">${data.location.country}</h3>
+          <div class="info">
+              <div class="first-row">
+                  <div class="info-item-container">
+                      <i class="fa-solid fa-wind"></i>
+                      <p class="wind">${data.current.wind_kph} km/h</p>
+                  </div>
+                  <div class="info-item-container">
+                      <i class="fa-solid fa-droplet"></i>
+                      <p class="humidity">${data.current.humidity}%</p>
+                  </div>
+                  <div class="info-item-container">
+                      <i class="fa-solid fa-calendar-week"></i>
+                      <p class="datetime">${data.location.localtime}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  `;
+	const topContainer = container.querySelector('.top-weather-container')
+	topContainer.style.backgroundImage = `url("Assets/${weatherCondition}.gif")`
+	cards.append(container)
+	// return container;
+}
 
-  const texto = conditionText.toLowerCase();
+function getWeatherGroup(conditionText) {
+	const weatherConditions = {
+		rainy: ['chuva', 'aguaceiro', 'chuvisco'],
+		sunny: ['sol', 'céu limpo'],
+		snowy: ['neve', 'nevasca'],
+		cloudy: ['nublado', 'encoberto', 'neblina', 'nevoeiro']
+	};
 
-  for (const [key, palavras] of Object.entries(weatherConditions)) {
-    if (palavras.some(palavra => texto.includes(palavra))) {
-      return key;
-    }
-  }
-  return 'snowy';
-  
+	const texto = conditionText.toLowerCase();
+
+	for (const [key, palavras] of Object.entries(weatherConditions)) {
+		if (palavras.some(palavra => texto.includes(palavra))) {
+			return key;
+		}
+	}
+	return 'snowy';
+
+}
+
+function searchCity() {
+	const cityName = input.value.trim();
+	if (cityName) {
+		getWeather(cityName);
+		input.value = '';
+	}
 }
 
 function changeWeatherImage(weatherGroup) {
-  weatherImg.setAttribute('src', `./Assets/${weatherGroup}.gif`);
+	weatherImg.setAttribute('src', `./Assets/${weatherGroup}.gif`);
 }
 
-
-
 input.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    const cityName = input.value.trim();
-    if (cityName) {
-      getWeather(cityName);
-      input.value = '';
-    }
-  }
+	if (event.key === 'Enter') {
+		searchCity()
+	}
 });
 
-getWeather('Recife');
+btnAddCard.onclick = searchCity
