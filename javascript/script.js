@@ -3,6 +3,11 @@ const weatherImg = document.querySelector('.weather-img')
 const cards = document.querySelector('.cards')
 const btnAddCard = document.querySelector("#button-add-card")
 
+const toolbar = document.querySelector('.toolbar')
+const visibleToolbar = false
+const btnRemoveSelected = document.querySelector("#button-remove-selected")
+
+
 async function getWeather(cityName) {
 	try {
 		const response = await fetch(`https://weather-api-server-production.up.railway.app/clima?cidade=${encodeURIComponent(cityName)}`);
@@ -23,7 +28,6 @@ function createWeatherCard(data) {
 	const container = document.createElement('div');
 	container.classList.add('weather-container');
 	const weatherCondition = getWeatherGroup(data.current.condition.text)
-	console.log(weatherCondition)
 	container.innerHTML = `
       <div class="top-weather-container">
           <h2 class="temperature">${Math.round(data.current.temp_c)}°</h2>
@@ -57,6 +61,7 @@ function createWeatherCard(data) {
 	topContainer.style.backgroundImage = `url("Assets/${weatherCondition}.gif")`
 	cards.append(container)
 	// return container;
+
 }
 
 function getWeatherGroup(conditionText) {
@@ -97,3 +102,28 @@ input.addEventListener('keydown', (event) => {
 });
 
 btnAddCard.onclick = searchCity
+
+cards.addEventListener('click', (e) => {
+	const container = e.target.closest('.weather-container');
+	
+	if (container) {
+		container.classList.toggle('selected');
+
+		const thereAreSelected = [...document.querySelectorAll('.weather-container')]
+			.some(element => element.classList.contains('selected'));
+
+		if (thereAreSelected) {
+			toolbar.classList.add('visible');
+		} else {
+			toolbar.classList.remove('visible');
+		}
+	}
+});
+
+btnRemoveSelected.onclick = () => {
+	document.querySelectorAll('.selected').forEach(element => {
+		element.remove()
+		toolbar.classList.remove('visible')
+	})
+}
+

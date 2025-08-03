@@ -1,8 +1,8 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family:  'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 header {
@@ -12,9 +12,13 @@ header {
     padding: 20px;
     gap: 10px;
 }
-html{
+
+html {
     background-color: #1d1d1d;
 }
+/* body{
+    position: relative;
+} */
 
 #city-input {
     padding: 10px;
@@ -32,7 +36,7 @@ html{
     font-size: 20px;
 }
 
-#button-add-card{
+#button-add-card {
     background: #fff;
     font-size: 32px;
     padding: 8px;
@@ -56,7 +60,7 @@ html{
     /* background: #000; */
 }
 
-.weather-container{
+.weather-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -70,11 +74,16 @@ html{
     cursor: pointer;
     transition: all ease .3s;
 }
-.weather-container:hover{
+
+.weather-container:hover {
     transform: scale(1.1)
 }
 
-.top-weather-container{
+.weather-container.selected {
+    border: 4px solid rgb(255, 196, 0);
+}
+
+.top-weather-container {
     /* background: green; */
     display: flex;
     flex-direction: column;
@@ -87,12 +96,14 @@ html{
     background-image: url(Assets/cloudy.gif);
     background-size: cover;
 }
-.weather-img{
+
+.weather-img {
     width: 100%;
     display: none;
     /* height: 100%; */
 }
-.condition{
+
+.condition {
     position: absolute;
     bottom: 2%;
     left: 0;
@@ -103,12 +114,14 @@ html{
     font-size: 16px;
 
 }
-.temperature{
+
+.temperature {
     color: #fff;
     font-size: 64px;
     filter: drop-shadow(2px 2px 8px #33333377);
 }
-.weather-icon-container{
+
+.weather-icon-container {
     background: #fff;
     width: 72px;
     height: 64px;
@@ -118,14 +131,15 @@ html{
     left: 0;
     /* transform: translateY(100%); */
 }
-.weather-icon-img{
+
+.weather-icon-img {
     transform: translateY(4px);
     width: 52px;
     filter: drop-shadow(2px 2px 2px #55555555);
 }
 
 
-.bottom-weather-container{
+.bottom-weather-container {
     /* background: green; */
     width: 100%;
     display: flex;
@@ -135,7 +149,7 @@ html{
     padding: 12px;
 }
 
-.city{
+.city {
     /* color: red; */
     background: #cfcfcf;
     border-radius: 50px;
@@ -144,21 +158,22 @@ html{
     line-height: 100%;
 }
 
-.country{
+.country {
     /* background: yellow; */
     font-size: 16px;
     /* height: 20%; */
     line-height: 100%;
 }
 
-.info{
+.info {
     /* background: red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.info .first-row{
+
+.info .first-row {
     /* background: blue; */
     padding: 12px;
     display: flex;
@@ -168,7 +183,7 @@ html{
     gap: 12px;
 }
 
-.info-item-container{
+.info-item-container {
     /* background: #cfcfcf; */
     border-radius: 50px;
     width: 100%;
@@ -181,7 +196,8 @@ html{
     font-weight: 500;
     text-align: center;
 }
-.info-item-container i{
+
+.info-item-container i {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -214,4 +230,33 @@ html{
     }
 }
 
+.toolbar {
+    position: absolute;
+    bottom: 10%;
+    right: 4%;
+    opacity: 0;
+    /* background: yellow; */
+    transition: all ease .3s;
+    pointer-events: none;
+}
+.toolbar.visible{
+    opacity: 1;
+    pointer-events: auto;
+    bottom: 4%;
 
+}
+
+#button-remove-selected {
+    /* width: 22px; */
+    /* height: 22px; */
+    font-size: 24px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all ease .3s;
+    border: none;
+    line-height: 100%;
+    border-radius: 4px;
+}
+#button-remove-selected:hover{
+    background: rgb(255, 80, 80);
+}
